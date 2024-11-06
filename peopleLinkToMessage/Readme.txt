@@ -1,0 +1,1 @@
+This folder contain the code for finding the people form the company links from the clean data table

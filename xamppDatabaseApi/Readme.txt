@@ -1,0 +1,1 @@
+This folder contain the code act a bridge between Xampp MySQL and other folder MySQL database requests

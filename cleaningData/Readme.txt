@@ -1,0 +1,1 @@
+This folder contain the code for cleaning data from allcompanydata table to cleandata table

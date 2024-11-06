@@ -1,0 +1,1 @@
+This file contain the code for messaging to the people from peoplelinks table
