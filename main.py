@@ -31,5 +31,5 @@ while temp != 'f':
         #     lambda d: d.execute_script("return document.readyState") == "complete"
         # ) 
     
-    temp = input("Press !('f') key to continue looping.. > ")
+    temp = input("In the main page | Press !('f') key to continue looping.. > ")
     
