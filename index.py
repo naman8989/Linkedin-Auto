@@ -8,7 +8,7 @@ def run(driver):
         for i in range(len(folders)):
             print(i," | ",folders[i])
 
-        curFolder = input("Enter the folder initial 4 letter or index number to call | Press (f) to exit >> ")
+        curFolder = input("Please login into your account if not\nEnter the folder initial 4 letter or index number to call | Press (f) to exit >> ")
         if curFolder == 'f':
             continue
 

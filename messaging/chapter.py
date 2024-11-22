@@ -60,7 +60,7 @@ def run(driver):
             print("page loaded.....")
 
 
-            futureCom = input("f(for break loop)\nd*(for loading particular page using number)\ns(for skip)\np(for previous) \nWaiting for input command >>> ")
+            futureCom = input("f(for break loop)\nd*(for loading particular page using number)\ns(for skip)\np(for previous)\nany other input to continue \nWaiting for input command >>> ")
 
 
             # if you want to skip

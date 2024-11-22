@@ -1,0 +1,12 @@
+importlib
+selenium
+os 
+requests
+json
+time
+pygetwindow
+pyautogui
+Levenshtein
+flask
+mysql
+flask_cors
