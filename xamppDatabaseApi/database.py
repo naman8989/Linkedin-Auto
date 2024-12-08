@@ -1,5 +1,6 @@
 from flask import Flask , request
 from flask_cors import CORS
+import pymongo 
 import mysql.connector
 import json
 
@@ -15,6 +16,16 @@ try:
     )
 except:
     print("mysql server is close")
+
+try:
+    # Configure MongoDB connection
+    MONGO_URI = "mongodb://localhost:27017/profPerson"  # Replace with your MongoDB URI
+    client = pymongo.MongoClient(MONGO_URI)
+    db = client['profPerson']  # Access the database
+    crud = db['scrapedData']
+except:
+    print("mongodb server is close")
+
 
 
 def sqlCommitWorkFlow(quer):
@@ -46,13 +57,51 @@ def sqlWorkFlow(quer):
         print("err from mysql",err)
         return "Error"
 
-
+def mongoCommitWorkFlow(quer):
+    try:
+        tem = crud.insert_one(quer)
+        return tem.inserted_id
+    except:
+        return "error"
 
 app = Flask(__name__) #creating the Flask class object   
  
 @app.route('/')
 def home():
     return "api is working"
+
+# @app.route('/temp')
+# def temp():
+#     print("in here")
+#     # try:
+#     crud.insert_one({'some':"something",'another':"nothing"})
+#     # except:
+#     #     pass
+#     return "OK"
+
+@app.route('/pushPersonData')
+def pushPersonData():
+    try:
+        personUrl       = request.args.get('personUrl') 
+        personName,personCompStren = request.args.get('personName').split("|") 
+        personAllRoles  = request.args.get('personAllRoles')
+        personCurrLoc   = request.args.get('personCurrLoc') 
+        personAbout     = request.args.get('personAbout')
+        personExp       = request.args.get('personExp') 
+        personPrevCom   = request.args.get('personPrevCom')
+        personPostData  = request.args.get('personPostData') 
+        id1 = mongoCommitWorkFlow({'data1':f'{personAllRoles}'})
+        id2 = mongoCommitWorkFlow({'data2':f'{personAbout}'})
+        id3 = mongoCommitWorkFlow({'data3':f'{personExp}'})
+        id4 = mongoCommitWorkFlow({'data4':f'{personPrevCom}'})
+        id5 = mongoCommitWorkFlow({'data5':f'{personPostData}'})
+
+
+        query = f"INSERT INTO persondata( PersonUrl, PersonName, PersonAllRoles, PersonCurrentLocaiton, PersonAbout, PersonExpData, PersonPrevCompany, PersonPostData, PersonCompanyStrength)  VALUES('{personUrl}','{personName}','{id1}','{json.dumps(personCurrLoc)}','{id2}','{id3}','{id4}','{id5}','{personCompStren}')"
+        return sqlCommitWorkFlow(query)
+    
+    except Exception as e:
+        return "Error" 
 
 @app.route('/companyData') #decorator drfines the   
 def companyData():
@@ -159,5 +208,6 @@ if __name__ =='__main__':
     if mydb.is_connected():
         app.run(debug = True)  
         mydb.close()
+        client.close()
 
 
